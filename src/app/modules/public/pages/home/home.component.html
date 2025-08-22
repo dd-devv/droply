@@ -1,0 +1,334 @@
+<main class="pt-10 md:pt-0">
+
+  <!-- PREVIEW SERVICE -->
+  <section class="min-h-screen flex flex-col justify-between">
+    <!-- Contenido principal centrado -->
+    <div class="flex-1 flex flex-col items-center justify-center text-center px-4">
+      <!-- Hero Content -->
+      <div class="max-w-4xl mx-auto">
+        <h1 class="mb-6">
+          <span class="text-primary heading-1">Ahorra. </span>
+          <span class="heading-3">Sin perder tiempo</span>
+        </h1>
+
+        <p class="mx-auto mb-8 leading-relaxed">
+          Monitorea tus productos favoritos. Recibe alertas por WhatsApp y
+          compra inteligente.
+        </p>
+
+      </div>
+
+      <div class="flex justify-center w-full md:w-3/4">
+        <p-imagecompare class="shadow-lg rounded-lg border border-green-400">
+          <ng-template #left>
+            <img src="https://res.cloudinary.com/drjilrozd/image/upload/f_avif/v1755137046/imag-compare12_zb9wut.png" />
+          </ng-template>
+          <ng-template #right>
+            <img src="https://res.cloudinary.com/drjilrozd/image/upload/f_avif/v1755137046/imag-compare11_womi8h.png" />
+          </ng-template>
+        </p-imagecompare>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex flex-col sm:flex-row gap-8 justify-center items-center mt-8">
+        @if (!authService.isAuthenticated()) {
+        <p-button label="Empezar ahora" icon="pi pi-arrow-right" iconPos="right" [routerLink]="['/register']"
+          size="large" rounded="true" />
+        } @else {
+        <p-button label="Registrar seguimiento" icon="pi pi-plus" iconPos="right" [routerLink]="['/seguimientos']"
+          size="large" rounded="true" />
+        }
+
+        <p-button label="Mostrar ofertas" severity="secondary" size="large" icon="pi pi-tag" iconPos="right"
+          rounded="true" [routerLink]="['/ofertas']" />
+      </div>
+
+      <!-- Carrusel de logos en la parte inferior -->
+      @if (isBrowser) {
+      <div class="mt-16 w-full">
+        <div class="bg-surface-200/10 rounded-lg">
+          <div class="mx-auto px-4">
+            <p-carousel [value]="shops" [numVisible]="6" [numScroll]="1" [circular]="true" [autoplayInterval]="3000"
+              [showIndicators]="false" [showNavigators]="false" [responsiveOptions]="responsiveOptionsLogos"
+              class="store-logos-carousel">
+
+              <ng-template let-logo pTemplate="item">
+                <div class="flex items-center justify-center p-4 h-20">
+                  <a [href]="logo.url" target="_blank" class="cursor-pointer">
+                    <img [src]="logo.logo" [alt]="logo.name"
+                      class="h-12 object-contain opacity-100 md:opacity-60 hover:opacity-100 transition-opacity duration-300 filter grayscale-0 md:filter md:grayscale hover:grayscale-0" />
+                  </a>
+                </div>
+              </ng-template>
+            </p-carousel>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+
+  </section>
+
+  <!-- PREVIEW SERVICE -->
+  <section class="min-h-[calc(100vh-80px)] py-8 flex flex-col items-center justify-between">
+
+    <p-card class="my-16">
+      <div class="grid grid-cols-1 lg:grid-cols-2">
+
+        <!-- Columna izquierda - Contenido de texto -->
+        <div class="flex items-center justify-center">
+          <div class="text-center mb-6">
+            <h3 class="text-2xl font-bold  mb-6 text-center">
+              Consigue el mejor precio
+            </h3>
+            <p class="text-lg mb-6">
+              En <span class="font-medium">droply</span> comparar precios es fácil. Encuentra la mejor
+              opción y <span class="font-semibold">ahorra</span> tiempo y dinero.
+            </p>
+
+            <p-button label="Ir a ofertas" severity="contrast" rounded="true" icon="pi pi-chevron-right" iconPos="right"
+              [routerLink]="['/ofertas']" />
+          </div>
+        </div>
+
+        <!-- Columna derecha - Imagen completa -->
+        <div class="flex items-center justify-center cursor-pointer">
+          <img src="https://res.cloudinary.com/dszjxyo0b/image/upload/f_avif,q_5/v1751666425/promos-image_jupr6y.png"
+            alt="Promociones droply" class="w-full h-auto max-w-md object-contain" [routerLink]="['/ofertas']">
+        </div>
+      </div>
+    </p-card>
+
+    <div class="flex flex-col items-center gap-2 mt-6">
+      <span class="text-xl font-medium">Desplácese hacia abajo</span>
+      <span
+        class="animate-bounce h-8 w-8 bg-primary text-primary-contrast rounded-full inline-flex items-center justify-center">
+        <i class="pi pi-arrow-down"></i>
+      </span>
+    </div>
+  </section>
+
+
+  <!-- ABOUT SERVICE -->
+  <section class="mt-24">
+    <div class="card flex flex-col items-center overflow-hidde gap-24">
+      <div class="text-center">
+        <h1 class="text-4xl mx-auto text-primary">Tu compañero inteligente de compras</h1>
+        <p class="mt-5 text-1xl max-w-[600px] mx-auto">
+          Transforma tu experiencia de compra online con seguimiento personalizado de precios y alertas instantáneas
+          para que nunca pierdas una oferta.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-8">
+        <div pAnimateOnScroll enterClass="animate-enter fade-in-10 slide-in-from-l-8 animate-duration-1000"
+          leaveClass="animate-leave fade-out-0"
+          class="flex flex-col border border-surface shadow-lg justify-center items-center max-w-96 sm:max-w-96 md:max-w-64 rounded-2xl p-8 gap-4">
+          <div class="rounded-full bg-primary text-primary-contrast w-12 h-12 flex items-center justify-center">
+            <i class="pi pi-link !text-2xl"></i>
+          </div>
+          <span class="text-2xl font-bold text-center">Seguimiento de URLs</span>
+          <span class="text-muted-color marfa-italic-sm text-center">Agrega y monitorea cualquier producto de diferentes
+            tiendas online.</span>
+        </div>
+        <div pAnimateOnScroll enterClass="animate-enter fade-in-10 slide-in-from-l-8 animate-duration-1000"
+          leaveClass="animate-leave fade-out-0"
+          class="flex flex-col border border-surface shadow-lg justify-center items-center max-w-96 sm:max-w-96 md:max-w-64 rounded-2xl p-8 gap-4">
+          <div class="rounded-full bg-primary text-primary-contrast w-12 h-12 flex items-center justify-center">
+            <i class="pi pi-search !text-2xl"></i>
+          </div>
+          <span class="text-2xl font-bold text-center">Búsquedas con Omni Search</span>
+          <span class="text-muted-color marfa-italic-sm text-center">Encuentra cualquier producto en todas las tiendas
+            online.</span>
+        </div>
+        <div pAnimateOnScroll enterClass="animate-enter fade-in-10 animate-duration-1000"
+          leaveClass="animate-leave fade-out-0"
+          class="flex flex-col border border-surface shadow-lg justify-center items-center max-w-96 sm:max-w-96 md:max-w-64 rounded-2xl p-8 gap-4">
+          <div class="rounded-full bg-primary text-primary-contrast w-12 h-12 flex items-center justify-center">
+            <i class="pi pi-bell !text-2xl"></i>
+          </div>
+          <span class="text-2xl font-bold text-center">Alertas Instantáneas</span>
+          <span class="text-muted-color marfa-italic-sm text-center">Notificaciones mediante WhatsApp cuando bajan los
+            precios.</span>
+        </div>
+        <div pAnimateOnScroll enterClass="animate-enter fade-in-10 slide-in-from-r-8 animate-duration-1000"
+          leaveClass="animate-leave fade-out-0"
+          class="flex flex-col border border-surface shadow-lg justify-center items-center max-w-96 sm:max-w-96 md:max-w-64 rounded-2xl p-8 gap-4">
+          <div class="rounded-full bg-primary text-primary-contrast w-12 h-12 flex items-center justify-center">
+            <i class="pi pi-chart-line !text-2xl"></i>
+          </div>
+          <span class="text-2xl font-bold text-center">Historial de precios</span>
+          <span class="text-muted-color marfa-italic-sm text-center">Visualiza el comportamiento de precios de
+            tus productos.</span>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-8">
+        <div class="w-full my-8">
+          <h2 class="text-3xl font-medium text-center mb-4">Monitoreo de historial de precios</h2>
+
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div class="">
+              <!-- <h3>Historial de precios</h3> -->
+              <p-chart type="line" [data]="data" [options]="options" class="w-full" />
+            </div>
+
+            @if (!loading) {
+            <div class="p-2">
+              <h3 class="mb-3 flex flex-row items-center">
+                <div class="my-2 mr-2" title="{{productRandom().productInfo.url | extractDomain | titlecase}}">
+                  <img class="h-6" src="../../../../assets/svg/{{
+                  productRandom().productInfo.url | extractDomain
+                }}.svg" alt="Logo {{
+                  productRandom().productInfo.url | extractDomain
+                }}" />
+                </div>
+                {{productRandom().productInfo.title}}
+              </h3>
+
+              <div class="card flex justify-center items-center h-60 bg-white rounded-xl">
+                <img [src]="productRandom().productInfo.image" [alt]="productRandom().productInfo.title"
+                  class="rounded-md object-contain h-full" />
+              </div>
+
+              <a href="{{ productRandom().productInfo.url }}" target="_blank">
+                <div class="mt-5 flex justify-center">
+                  <!-- <p-button severity="contrast" label="Comprar en tienda" icon="pi pi-cart-plus" class="w-full"
+                                    styleClass="w-full" /> -->
+                  <p-button severity="success" label="¡COMPRAR AHORA! - PRECIO MÍNIMO" icon="pi pi-bolt"
+                    class="w-full animate-pulse hover:animate-none"
+                    styleClass="w-full font-bold shadow-lg shadow-green-500/50 hover:bg-green-500 " />
+                </div>
+              </a>
+            </div>
+            }
+          </div>
+        </div>
+
+        <div pAnimateOnScroll enterClass="animate-enter fade-in-10 slide-in-from-b-20 animate-duration-1000"
+          class="flex flex-col justify-center items-center rounded-2xl p-4 gap-4 my-12">
+          <span class="text-2xl font-medium text-center">Notificaciones instantáneas por WhatsApp</span>
+          <span class="text-muted-color text-center">Recibe mensajes de whatsapp en el momento en que los productos
+            cambien de precio.</span>
+
+          <div class="flex justify-center gap-6  md:h-[298px] lg:h-[409px] xl:h-[517px] 2xl:h-[633px] ">
+            <!-- Imagen desktop - oculta en pantallas pequeñas -->
+            <!-- <div class="hidden md:block w-3/4 rounded-lg">
+              @if (themeService.getStoredThemePreference()) {
+              <img
+                src="https://res.cloudinary.com/dszjxyo0b/image/upload/f_avif/v1753116455/message-whatsapp-dark_fiqcpb.png"
+                alt="" class="rounded-lg w-full">
+              }
+              @if (!themeService.getStoredThemePreference()) {
+              <img
+                src="https://res.cloudinary.com/dszjxyo0b/image/upload/f_avif/v1753116455/message-whatsapp-light_pkvuxq.png"
+                alt="" class="rounded-lg w-full">
+              }
+            </div> -->
+            <div class="hidden md:flex md:w-3/4 border border-primary-500 rounded-lg">
+              <img [src]="getImageSrc()" alt="" class="rounded-lg w-full">
+            </div>
+
+            <!-- Imagen móvil - visible en todas las pantallas, pero toma todo el ancho en pantallas pequeñas 298 409 517 633-->
+            <div class="max-w-80   flex md:w-auto  border border-primary-500 rounded-lg">
+              <img
+                class ="border border-primary-500 rounded-lg"
+                [src]="getImagePhoneSrc()"
+                alt="" class="rounded-lg h-full">
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-8">
+        <div pAnimateOnScroll enterClass="animate-enter fade-in-10 spin-in-45 slide-in-from-t-12 animate-duration-1000"
+          class="flex flex-col bg-primary text-primary-contrast border-primary shadow-lg justify-center items-center max-w-96 sm:max-w-96 md:max-w-64 rounded-2xl p-8 gap-4">
+          <span class="bg-white/20 text-3xl font-bold rounded-xl px-4 py-2">
+            {{publicService.usersLenght() | numberShort}}
+          </span>
+          <h3 class="heading-3">Usuarios</h3>
+          <span class="text-center">Activos que usan y confían en nuestra plataforma.</span>
+        </div>
+        <div
+          pAnimateOnScroll="{ enterClass: 'animate-enter fade-in-10 zoom-in-50 slide-in-from-t-20 animate-duration-1000' }"
+          class="flex flex-col bg-primary text-primary-contrast border-primary shadow-lg justify-center items-center max-w-96 sm:max-w-96 md:max-w-64 rounded-2xl p-8 gap-4">
+          <span class="bg-white/20 text-3xl font-bold rounded-xl px-4 py-2">
+            25+
+          </span>
+          <h3 class="heading-3">Tiendas</h3>
+          <span class="text-center">Realizamos seguimientos en más de 18 tiendas populares.</span>
+        </div>
+        <div pAnimateOnScroll
+          enterClass="animate-enter fade-in-10 spin-in-[-45deg] slide-in-from-t-16 animate-duration-1000"
+          class="flex flex-col bg-primary text-primary-contrast border-primary shadow-lg justify-center items-center max-w-96 sm:max-w-96 md:max-w-64 rounded-2xl p-8 gap-4">
+          <span class="bg-white/20 text-3xl font-bold rounded-xl px-4 py-2">
+            {{publicService.totalUrls() | numberShort}}
+          </span>
+          <h3 class="heading-3">Seguimientos</h3>
+          <span class="text-center">Activos en las distintas tiendas para nuestros usuarios.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFFERS -->
+  <section class="mt-32">
+    @if (!productService.isLoading()) {
+    <div>
+      <h1 class="pb-5 text-4xl mx-auto text-center text-primary">Ofertas</h1>
+      <p-carousel [value]="productService.productsPublic() | slice:0:8" [numVisible]="3" [numScroll]="3"
+        [circular]="false" [responsiveOptions]="responsiveOptions">
+
+        <ng-template let-product pTemplate="item">
+          <div class="border border-surface rounded-border m-2 p-4">
+            <div class="mb-4">
+              <div class="relative mx-auto">
+                <img [src]="product.image" [alt]="product.productTitle"
+                  class="w-full rounded-border h-[250px] object-cover" />
+                <p-tag [value]="'-'+product.discountPercentage + '% Desc.'" class="absolute bg-black text-green-400"
+                  [ngStyle]="{ 'left.px': 5, 'top.px': 5 }" />
+              </div>
+            </div>
+
+            <div class="mb-4 font-semibold text-2xl line-clamp-2 h-16">{{ truncateText(product.productTitle) }}</div>
+
+            <div class="flex justify-between items-center">
+              <div class="flex flex-col">
+                <div class=" text-2xl mt-0 text-green-700">{{ product.currentPrice | currency:'S/ ' }}</div>
+                <div class="text-sm text-gray-500 line-through">{{ product.previousPrice | currency:'S/ ' }}</div>
+              </div>
+              <img class="h-6" src="../../../../../assets/svg/{{product.url|extractDomain}}.svg"
+                alt="Logo {{product.url|extractDomain}}">
+            </div>
+
+            <div class="mt-4">
+              <a [href]="product.url" target="_blank">
+                <p-button icon="pi pi-shopping-cart" label="Ver" styleClass="w-full" />
+              </a>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+    }
+  </section>
+
+  <!-- Shops -->
+  <section class="mt-32">
+
+    <p-card class="">
+      <h4 class="pb-5 text-4xl mx-auto text-center text-primary">Tiendas disponibles</h4>
+      <div class="grid grid-cols-6 gap-4  my-0 md:my-10">
+        @for (shop of shops; track shop) {
+        <div class="flex justify-center">
+          <a [href]="shop.url" target="_blank">
+            <img [src]="shop.logo" alt="Logo de ..." class="h-12 md:h-14  object-contain" />
+          </a>
+        </div>
+        }
+      </div>
+    </p-card>
+
+  </section>
+</main>

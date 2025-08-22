@@ -1,0 +1,87 @@
+<div class="fixed left-0 top-10 h-screen mx-2 z-50" (mouseenter)="hovered.set(true)" (mouseleave)="hovered.set(false)">
+  <div class="border border-gray-500 rounded p-1 bg-gray-100/20 backdrop-blur-xl"
+    [class]="hovered() ? 'w-48' : 'w-12'">
+
+    <a class="inline-flex items-center gap-1 px-2 py-2 cursor-pointer hover:text-primary hover:marfa-semibold"
+      [routerLink]="['/admin']" routerLinkActive="text-primary marfa-semibold" [routerLinkActiveOptions]="{exact: true}">
+      <i class="pi pi-home !text-xl"></i>
+      @if (hovered()) {
+      <span class="font-semibold ms-2">Inicio</span>
+      }
+    </a>
+
+    <hr class="border-gray-500">
+
+    <div class="my-4">
+      <a class="px-2 flex items-center hover:text-primary font-semibold hover:marfa-semibold"
+        [routerLink]="['/admin/users']" routerLinkActive="text-primary marfa-semibold">
+        <i class="pi pi-users py-1"></i>
+        @if (hovered()) {
+        <span class="ms-2">Usuarios</span>
+        }
+      </a>
+    </div>
+
+    <div class="my-4">
+      <a class="px-2 flex items-center hover:text-primary hover:marfa-semibold" [routerLink]="['/admin/tracks']"
+        routerLinkActive="text-primary marfa-semibold">
+        <i class="pi pi-check-square py-1"></i>
+        @if (hovered()) {
+        <span class="ms-2">Seguimientos</span>
+        }
+      </a>
+    </div>
+
+    <div class="my-4">
+      <a class="px-2 flex items-center hover:text-primary hover:marfa-semibold" [routerLink]="['/admin/searches']"
+        routerLinkActive="text-primary marfa-semibold">
+        <i class="pi pi-search py-1"></i>
+        @if (hovered()) {
+        <span class="ms-2">Búsquedas</span>
+        }
+      </a>
+    </div>
+
+    <div class="my-4">
+      <a class="px-2 flex items-center hover:text-primary hover:marfa-semibold" [routerLink]="['/admin/views']"
+        routerLinkActive="text-primary marfa-semibold">
+        <i class="pi pi-eye py-1"></i>
+        @if (hovered()) {
+        <span class="ms-2">Visualizaciones</span>
+        }
+      </a>
+    </div>
+
+    <div class="my-4">
+      <a class="px-2 flex items-center hover:text-primary hover:marfa-semibold" [routerLink]="['/admin/buys']"
+        routerLinkActive="text-primary marfa-semibold">
+        <i class="pi pi-shopping-bag py-1"></i>
+        @if (hovered()) {
+        <span class="ms-2">Compras</span>
+        }
+      </a>
+    </div>
+
+    <div class="my-4">
+      <a class="px-2 flex items-center hover:text-primary hover:marfa-semibold" [routerLink]="['/admin/messages']"
+        routerLinkActive="text-primary marfa-semibold">
+        <i class="pi pi-whatsapp py-1"></i>
+        @if (hovered()) {
+        <span class="ms-2">Mensajes</span>
+        }
+      </a>
+    </div>
+
+    <hr class="border-gray-500">
+
+    <div class="my-4">
+      <a class="px-2 flex items-center hover:marfa-semibold" [routerLink]="['/']"
+        routerLinkActive="text-red-400 font-semibold">
+        <i class="pi pi-sign-out py-1 text-xl"></i>
+        @if (hovered()) {
+        <span class="ms-2">Regresar</span>
+        }
+      </a>
+    </div>
+
+</div>

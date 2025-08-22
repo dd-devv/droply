@@ -1,0 +1,116 @@
+<div class="">
+  <p-fieldset>
+    <ng-template #header>
+      <div class="flex items-center gap-2 px-2 text-primary">
+        <i class="pi pi-whatsapp"></i>
+        <span class="marfa-medium">Mensajes</span>
+
+        <p-button icon="pi pi-plus" severity="contrast" label="Nuevo" size="small" (click)="showDialog()" />
+      </div>
+    </ng-template>
+
+  </p-fieldset>
+
+  <h3 class="text-center my-6 heading-4">Lista de mensajes</h3>
+  <div class="w-full">
+    <p-table [value]="mensajes()" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[10, 20, 30]">
+      <ng-template #header>
+        <tr>
+          <th class="marfa-medium">Mensaje</th>
+          <th class="marfa-medium text-center">Imágenes</th>
+          <th class="marfa-medium text-center">Enviado</th>
+          <th class="marfa-medium text-end">Creado</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-msg>
+        <tr>
+          <td>
+            @if (!msg.sent) {
+            <i class="pi pi-times-circle text-red-400 me-1 text-sm" tooltipPosition="bottom" pTooltip="No enviado"></i>
+            }
+            @if (msg.sent) {
+            <i class="pi pi-check-circle text-primary me-1 text-sm" tooltipPosition="bottom" pTooltip="Enviado"></i>
+            }
+
+            {{ msg.message }}
+          </td>
+          <td class="text-center">
+            <div class="flex gap-4 justify-center">
+              @for (item of msg.images; track $index) {
+              <img [src]="item" alt="" class="w-20">
+              }
+            </div>
+          </td>
+          <td class="text-center text-xs">{{ msg.sendOn | date:'dd/MM/yy hh:mm'}}</td>
+          <td class="text-end text-xs">{{ msg.createdAt | date:'dd/MM/yy'}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+</div>
+
+<p-dialog maskStyleClass="backdrop-blur-sm" [(visible)]="visible" [modal]="true" [style]="{ width: '25rem' }">
+  <ng-template #header>
+    <div class="inline-flex items-center justify-center gap-2">
+      <h2 class="font-bold whitespace-nowrap text-xl">Registrar mi mensaje masivo</h2>
+    </div>
+  </ng-template>
+
+  <span class="text-surface-500 dark:text-surface-400 block mb-4">
+    Registra mensaje para enviar a todos los usuarios.
+  </span>
+
+  <div class="flex flex-col my-4">
+    <p-floatlabel variant="on">
+      <textarea pTextarea id="message" [(ngModel)]="dataReg.message" name="message" rows="8" style="resize: vertical"
+        class="h-full" fluid="true"></textarea>
+      <label for="message" class="rounded">
+        <i class="pi pi-comment me-1"></i>
+        Mensaje
+      </label>
+    </p-floatlabel>
+  </div>
+
+  <div class="card my-4">
+    <p-fileupload #fileUploader name="demo[]" (onSelect)="onSelect($event)" [multiple]="true" accept="image/*"
+      mode="advanced">
+      <ng-template #empty>
+        <div>Añadir imágenes del plato.</div>
+      </ng-template>
+      <ng-template #content>
+        @if (uploadedFiles.length) {
+        <ul>
+          @for (file of uploadedFiles; track $index) {
+          <li>
+            {{ file.name }} - {{ file.size }} bytes
+            @if (file.url) {
+            <img [src]="file.url" alt="Imagen subida" width="100">
+            }
+          </li>
+          }
+        </ul>
+        }
+      </ng-template>
+    </p-fileupload>
+  </div>
+
+  <div class="flex flex-col mb-4 mt-6">
+    <p-floatlabel variant="on">
+      <p-datepicker [(ngModel)]="dataReg.sendOn" name="sendOn" id="sendOn" [showTime]="true" hourFormat="24"
+        fluid="true" />
+      <label for="sendOn" class="rounded">
+        <i class="pi pi-qrcode me-1"></i>
+        Fecha de envío
+      </label>
+    </p-floatlabel>
+  </div>
+
+  <div class="flex justify-center">
+    <p-button type="submit" [disabled]="dataReg.message.trim() === '' || dataReg.sendOn === null" label="Regsitrar"
+      icon="pi pi-check" [loading]="loading" (onClick)="registerMessage()" />
+  </div>
+
+
+</p-dialog>
+
+<p-toast [breakpoints]="{ '780px': { width: '80%', right: '8' } }" />
