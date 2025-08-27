@@ -495,14 +495,23 @@ export default class ProductComponent implements OnInit {
 //   // window.open(`${url}?utm_source=droply.pe&utm_medium=referral`, '_blank');
 // }
 
-redirectToProduct(urlId: string) {
-  console.log('Intentando navegar a:', '/seguimientos/' + urlId);
-  this.router.navigate(['/seguimientos', urlId])
-    .then(success => {
-      console.log('Navegación exitosa?', success);
-    })
-    .catch(err => {
-      console.error('Error en navegación:', err);
-    });
-}
+  redirectToProduct(urlId: string) {
+    console.log('Intentando navegar a:', '/seguimientos/' + urlId);
+    this.router.navigate(['/seguimientos', urlId])
+      .then(success => {
+        console.log('Navegación exitosa?', success);
+      })
+      .catch(err => {
+        console.error('Error en navegación:', err);
+      });
+  }
+
+  limpiarProductosRecomendados(productsRec : any[], productsEqual: any[]) {
+    // console.log('Productos recomendados antes de limpiar:', productsRec);
+    // console.log('Productos iguales:', productsEqual);
+    const equalUrls = new Set(productsEqual.map(product => product.urlId));
+    
+    return productsRec.filter(product => !equalUrls.has(product.urlId));
+  }
+
 }

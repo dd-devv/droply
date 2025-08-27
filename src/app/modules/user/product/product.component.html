@@ -453,7 +453,7 @@
   <div
     class="my-4 grid grid-cols-2 gap-1 sm:grid-cols-2 sm:gap-3 lg:grid-cols-3 xl:grid-cols-4"
   >
-    @for (product of productsRec(); track $index) {
+    @for (product of limpiarProductosRecomendados(productsRec(), productsEqual() ); track $index) {
     <!-- @let arrDate = productService.priceHistory().priceHistory.dates[0];
           @let arrPrices = productService.priceHistory().priceHistory.prices[0]; -->
     <div class="masonry-item">
