@@ -4,83 +4,52 @@
 
 <footer class="mt-4">
   <section class="bg-gray-900 py-10 px-4 md:px-10">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <div class="text-white text-center md:text-left">
-        <img src="../../../../../assets/svg/logo-white.svg" alt="logo droply" class="mx-auto md:mx-0 w-40 cursor-pointer"
-          [routerLink]="(['/'])">
-        <div class="mt-4 flex justify-center md:justify-start">
+    <div class="flex justify-center">
+      <div class="text-white text-center">
+        <div class="flex justify-center">
+          <img src="../../../../../assets/svg/logo-white.svg" alt="logo droply"
+            class="mx-auto md:mx-0 w-40 cursor-pointer" [routerLink]="(['/'])">
+        </div>
+        <div class="mt-4 flex justify-center">
           <a href="https://www.facebook.com/droply.pe" target="_blank">
             <i class="pi pi-facebook me-4 text-xl hover:text-blue-500 cursor-pointer"></i>
           </a>
-          <a href="https://www.instagram.com/droply_pe" target="_blank" >
+          <a href="https://www.instagram.com/droply.pe" target="_blank">
             <i class="pi pi-instagram me-4 text-xl hover:text-pink-500 cursor-pointer"></i>
           </a>
-          <a href="https://www.tiktok.com/@droply_pe" target="_blank">
+          <a href="https://www.tiktok.com/@droply.pe" target="_blank">
             <i class="pi pi-tiktok me-4 text-xl cursor-pointer"></i>
           </a>
-          <a href="https://www.youtube.com/@droply_pe" target="_blank">
+          <a href="https://www.youtube.com/@droply.pe" target="_blank">
             <i class="pi pi-youtube text-xl hover:text-red-500 cursor-pointer"></i>
           </a>
         </div>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-white">
-        <div class="text-center md:text-left">
-          <h3 class="font-bold mb-3 heading-4 text-primary">Producto</h3>
-          <!-- <p class="mb-2 hover:text-primary-200 marfa-light-italic-sm cursor-pointer">
-            <a [routerLink]="(['/tutorials'])" routerLinkActive="text-primary">
-              Tutoriales
-            </a>
-          </p> -->
 
+        <div class="mt-4 flex justify-center">
+          <a [routerLink]="(['/about'])" routerLinkActive="text-primary" class="me-2">
+            | Nosotros
+          </a>
+          <a [routerLink]="(['/faqs'])" routerLinkActive="text-primary" class="me-2">
+            | Preguntas frecuentes
+          </a>
+          <a [routerLink]="(['/contact'])" routerLinkActive="text-primary" class="me-2">
+            | Contacto
+          </a>
+        </div>
 
-          <!-- <p class="mb-2 hover:text-primary-200 marfa-light-italic-sm cursor-pointer">
-            <a [routerLink]="(['/plans'])" routerLinkActive="text-primary">
-              Planes
-            </a>
-          </p>
-          <p class="mb-2 hover:text-primary-200 marfa-light-italic-sm cursor-pointer">Descripción general</p> -->
-        </div>
-        <div class="text-center md:text-left">
-          <h6 class="font-bold mb-3 heading-4 text-primary">Empresa</h6>
-          <p class="mb-2 hover:text-primary-200 marfa-light-italic-sm cursor-pointer">
-            <a [routerLink]="(['/about'])" routerLinkActive="text-primary">
-              Nosotros
-            </a>
-          </p>
-          <p class="mb-2 hover:text-primary-200 marfa-light-italic-sm cursor-pointer">
-            <a [routerLink]="(['/contact'])" routerLinkActive="text-primary">
-              Contacto
-            </a>
-          </p>
-          <p class="mb-2 hover:text-primary-200 marfa-light-italic-sm cursor-pointer">
-            <a [routerLink]="(['/faqs'])" routerLinkActive="text-primary">
-              Preguntas frecuentes
-            </a>
-          </p>
-          <div class="flex justify-center md:justify-start">
-            <p class="mb-2 hover:text-primary-200 marfa-light-italic-sm cursor-pointer bg-slate-800/55 rounded-md p-1 px-2 text-center">
-              <a [routerLink]="(['/contact'])" routerLinkActive="text-primary">
-                <i class="pi pi-shop" style="font-size: 1rem"></i>
-                Integra tu tienda <br> y aparece en Droply
-              </a>
-            </p>
-          </div>
-        </div>
-        <!-- <div class="text-center md:text-left">
-          <h6 class="font-bold mb-3 heading-4 text-primary">Recursos</h6>
-          <p class="mb-2 hover:text-primary-200 marfa-light-italic-sm cursor-pointer">
-            <a [routerLink]="(['/tutorials'])" routerLinkActive="text-primary">
-              Tutoriales
-            </a>
-          </p>
-          <p class="mb-2 hover:text-primary-200 marfa-light-italic-sm cursor-pointer">Soporte</p>
-        </div> -->
+        <p
+          class="mt-4 hover:text-primary-200 marfa-light-italic-sm cursor-pointer bg-slate-800/55 rounded-md p-1 px-2 text-center">
+          <a [routerLink]="(['/contact'])" routerLinkActive="text-primary">
+            <i class="pi pi-shop" style="font-size: 1rem"></i>
+            Integra tu tienda y aparece en Droply
+          </a>
+        </p>
       </div>
     </div>
   </section>
 
   <section class="bg-black text-white py-2">
-    <p class="text-center"> © 2025 Copyright Droply.pe </p>
+    <p class="text-center"> © 2025 Copyright droply.pe </p>
   </section>
 
 </footer>

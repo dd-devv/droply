@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { ProdsResp, ProductPublic, SearchReq, SearchRes } from '../modules/user/interfaces';
+import { ProdsResp, ProductPublic, SearchReq, SearchResponse, SearchResult } from '../modules/user/interfaces';
 import { catchError, Observable, throwError, of } from 'rxjs';
 import { TokenStorageService } from '../modules/auth/services/tokenStorage.service';
 import { injectQueryClient } from '@tanstack/angular-query-experimental';
@@ -17,17 +17,19 @@ export class SearchService {
   private queryClient = injectQueryClient();
 
   readonly isLoading = signal<boolean>(false);
-  readonly results = signal<SearchRes[]>([]);
+  readonly results = signal<SearchResult[]>([]);
+  readonly suggestions = signal<string[]>([]);
+  readonly isGeneric = signal<boolean>(false);
   readonly productsFound = signal<ProductPublic[]>([]);
 
   private authToken = computed(() => this.tokenStorage.getToken());
 
   // ✅ Funciones privadas que hacen las requests
-  private async fetchSearchTerm(term: string): Promise<SearchRes[]> {
+  private async fetchSearchTerm(term: string): Promise<SearchResponse> {
     const searchData: SearchReq = { term };
 
     return await lastValueFrom(
-      this.http.post<SearchRes[]>(`${this.apiUrl}search`, searchData, {
+      this.http.post<SearchResponse>(`${this.apiUrl}search`, searchData, {
         headers: {
           Authorization: `Bearer ${this.authToken()}`
         }
@@ -52,25 +54,29 @@ export class SearchService {
   }
 
   // ✅ Método compatible que usa TanStack Query y retorna Observable
-  searTerm(term: string): Observable<SearchRes[]> {
+  searTerm(term: string): Observable<SearchResponse> {
     this.isLoading.set(true);
 
     // Si ya está en caché, devuélvelo directo
-    const cached = this.queryClient.getQueryData<SearchRes[]>(['search-term', term]);
+    const cached = this.queryClient.getQueryData<SearchResponse>(['search-term', term]);
     if (cached) {
-      this.results.set(cached);
+      this.results.set(cached.results);
+      this.suggestions.set(cached.suggestions);
+      this.isGeneric.set(cached.isGeneric);
       this.isLoading.set(false);
       return of(cached);
     }
 
     // Si no está en caché, usar TanStack para guardar y devolver
-    return new Observable<SearchRes[]>(subscriber => {
+    return new Observable<SearchResponse>(subscriber => {
       this.queryClient.ensureQueryData({
         queryKey: ['search-term', term],
         queryFn: () => this.fetchSearchTerm(term),
         staleTime: 1000 * 60 * 5
       }).then(data => {
-        this.results.set(data);
+        this.results.set(data.results);
+        this.suggestions.set(data.suggestions);
+        this.isGeneric.set(data.isGeneric);
         this.isLoading.set(false);
         subscriber.next(data);
         subscriber.complete();
@@ -131,7 +137,7 @@ export class SearchService {
     });
   }
 
-  getSearchTermFromCache(term: string): SearchRes[] | undefined {
+  getSearchTermFromCache(term: string): SearchResult[] | undefined {
     return this.queryClient.getQueryData(['search-term', term]);
   }
 
@@ -142,6 +148,8 @@ export class SearchService {
   clearAllSearchCache() {
     this.queryClient.clear();
     this.results.set([]);
+    this.suggestions.set([]);
+    this.isGeneric.set(false);
     this.productsFound.set([]);
   }
 }

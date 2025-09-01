@@ -31,7 +31,7 @@
 
   @if (!isLoading()) {
 
-  @if (productsFound().length >= 1) {
+  @if (productsFound().length >= 1 && !isGeneric()) {
   <div class="card flex justify-center mt-6">
     <p-fieldset legend="Productos que rastreamos">
       <div class="grid mt-3 grid-cols-2 gap-2 sm:gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5">
@@ -112,7 +112,7 @@
 
                 @if (isAuthenticated) {
                 @if (getMyJob(product.urlId)) {
-                  <p-button label="No seguir" severity="danger" icon="pi pi-times" class="flex-1" outlined="true"
+                <p-button label="No seguir" severity="danger" icon="pi pi-times" class="flex-1" outlined="true"
                   styleClass="w-full" size="small" (click)="deleteUrl(product.urlId)" />
 
                 <!-- <p class="text-center text-base text-red-500 border border-red-500 rounded-md py-1 sm:py-2 hover:bg-red-500 hover:text-white cursor-pointer"
@@ -213,5 +213,24 @@
   </div>
   }
 </section>
+
+<p-dialog maskStyleClass="backdrop-blur-sm" header="Edit Profile" [modal]="true" [(visible)]="isGeneric"
+  [style]="{ width: '25rem' }">
+
+  <ng-template #header>
+    <div class="inline-flex items-center justify-center gap-2">
+      <h2 class="font-bold whitespace-nowrap text-xl">Búsqueda muy general</h2>
+    </div>
+  </ng-template>
+
+  <span class="p-text-secondary block mb-8">Prueba con alguno de los términos recomendados.</span>
+
+  <div class="card flex items-center gap-2 flex-wrap">
+    @for (sug of suggestions(); track $index) {
+    <p-chip [label]="sug | titlecase" (click)="selectSuggestion(sug)"
+      class="cursor-pointer" />
+    }
+  </div>
+</p-dialog>
 
 <p-toast [breakpoints]="{ '780px': { width: '80%', right: '8' } }" />

@@ -20,6 +20,8 @@ import { firstValueFrom } from 'rxjs';
 import { ProductPublic } from '../interfaces';
 import { BadgeModule } from 'primeng/badge';
 import { FieldsetModule } from 'primeng/fieldset';
+import { Dialog } from 'primeng/dialog';
+import { Chip } from 'primeng/chip';
 
 @Component({
   selector: 'app-search-results',
@@ -39,7 +41,10 @@ import { FieldsetModule } from 'primeng/fieldset';
     ExtractDomainPipe,
     TimeAgoPipe,
     BadgeModule,
-    FieldsetModule
+    FieldsetModule,
+    Dialog,
+    Chip,
+    TitleCasePipe
   ],
   providers: [MessageService],
   templateUrl: './search-results.component.html',
@@ -59,6 +64,8 @@ export default class SearchResultsComponent implements OnInit {
   isLoading = this.searchService.isLoading;
   results = this.searchService.results;
   productsFound = this.searchService.productsFound;
+  isGeneric = this.searchService.isGeneric;
+  suggestions = this.searchService.suggestions;
   sortOrder = signal<'asc' | 'desc'>('desc');
   estadosOfertas = signal<{ [key: string]: boolean }>({});
   isAuthenticated = true;
@@ -120,11 +127,14 @@ export default class SearchResultsComponent implements OnInit {
     const queryParams: any = {};
     this.searchService.searTerm(this.term).subscribe({
       next: () => {
+        if (this.isGeneric()) {
+          this.productsFound.set([]);
+        }
+
         this.loading.set(false);
       },
       error: (err) => {
         this.loading.set(false);
-        console.log('error', err);
       }
     });
 
@@ -271,6 +281,12 @@ export default class SearchResultsComponent implements OnInit {
         });
       }
     });
+  }
+
+  selectSuggestion(suggestion: string): void {
+    this.term = suggestion;
+    this.searchTerm();
+    this.isGeneric.set(false);
   }
 
   getMyJob(urlId: string): boolean {
