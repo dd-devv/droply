@@ -43,7 +43,6 @@ import { Chip } from 'primeng/chip';
     BadgeModule,
     FieldsetModule,
     Dialog,
-    Chip,
     TitleCasePipe
   ],
   providers: [MessageService],
@@ -89,11 +88,7 @@ export default class SearchResultsComponent implements OnInit {
       if (searchQuery) {
         this.term = this.normalizeSearchTerm(searchQuery);
 
-        if (this.term.length > 7) {
-          this.searchTerm();
-        } else {
-          this.isLoading.set(false);
-        }
+        this.searchTerm();
       }
     });
   }
