@@ -7,13 +7,14 @@ import { Toast } from 'primeng/toast';
 import AuthService from '../services/auth.service';
 import { Router } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
+import { RedirectService } from '../../../services/redirect.service';
 
 
 @Component({
   selector: 'app-verify-whatsapp',
   imports: [CardModule, FormsModule, ButtonModule, Toast],
   providers: [MessageService],
-  styleUrl:'./verify-whatsapp.component.css',
+  styleUrl: './verify-whatsapp.component.css',
   templateUrl: './verify-whatsapp.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -22,6 +23,7 @@ export default class VerifyWhatsappComponent {
   PLATFORM_ID = inject(PLATFORM_ID);
   router = inject(Router);
   verifyng: boolean = false;
+  private redirectService = inject(RedirectService);
 
   // Variables para el OTP Input - CORRECCIÓN AQUÍ
   otpLength = 6;
@@ -83,7 +85,7 @@ export default class VerifyWhatsappComponent {
     }
 
     if (!/^\d$/.test(event.key) &&
-        !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(event.key)) {
+      !['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab'].includes(event.key)) {
       event.preventDefault();
       this.isInvalid = true;
       setTimeout(() => this.isInvalid = false, 1000);
@@ -135,12 +137,12 @@ export default class VerifyWhatsappComponent {
         });
 
         this.verifyng = false;
-        this.router.navigate(['/seguimientos']);
-        this.authService.checkAuthStatus();
+        this.redirectService.redirectToSavedUrl();
+        // this.authService.checkAuthStatus();
 
-        if (isPlatformBrowser(this.PLATFORM_ID)) {
-          window.location.reload();
-        }
+        // if (isPlatformBrowser(this.PLATFORM_ID)) {
+        //   window.location.reload();
+        // }
       },
       error: (err) => {
         this.messageService.add({

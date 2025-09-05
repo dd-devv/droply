@@ -22,6 +22,7 @@ import { SkeletonProdComponent } from '../../../ui/skeleton-prod/skeleton-prod.c
 import { CategoryService } from '../services/category.service';
 import { firstValueFrom } from 'rxjs';
 import { Select } from 'primeng/select';
+import { RedirectService } from '../../../services/redirect.service';
 
 @Component({
   selector: 'app-products-all',
@@ -58,6 +59,7 @@ export default class ProductsAllComponent implements OnInit {
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private categoryService = inject(CategoryService);
+  redirectService = inject(RedirectService);
 
   // Estado del componente
   selectedStore: string | null = null;
@@ -300,5 +302,9 @@ export default class ProductsAllComponent implements OnInit {
 
   getMyJob(urlId: string): boolean {
     return this.estadosOfertas()[urlId] || false;
+  }
+
+  setRedirectUrl(url: string): void {
+    this.redirectService.goToLogin(url);
   }
 }

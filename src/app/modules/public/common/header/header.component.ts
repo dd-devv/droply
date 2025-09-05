@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { InputGroup } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputTextModule } from 'primeng/inputtext';
+import { RedirectService } from '../../../../services/redirect.service';
 
 @Component({
   selector: 'app-header',
@@ -37,8 +38,10 @@ import { InputTextModule } from 'primeng/inputtext';
 })
 export class HeaderComponent {
   authService = inject(AuthService);
+  authenticated = this.authService.isAuthenticated;
   router = inject(Router);
   isDarkTheme$: Observable<boolean>;
+  redirectService = inject(RedirectService);
 
   @ViewChild('op') op!: Popover;
 
@@ -66,5 +69,9 @@ export class HeaderComponent {
       queryParams: { q: this.search }
     });
     this.search = '';
+  }
+
+  onLoginClick(): void {
+    this.redirectService.goToLogin();
   }
 }

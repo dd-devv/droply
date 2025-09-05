@@ -18,6 +18,7 @@ import { SkeletonProdComponent } from '../../../ui/skeleton-prod/skeleton-prod.c
 import { CardModule } from 'primeng/card';
 import { ViewService } from '../../../services/view.service';
 import { BuyService } from '../../../services/buy.service';
+import { RedirectService } from '../../../services/redirect.service';
 
 @Component({
   selector: 'app-product',
@@ -54,6 +55,7 @@ export default class ProductComponent implements OnInit {
   private meta = inject(Meta); // Inyectar servicio Meta
   private title = inject(Title); // Inyectar servicio Title
   private document = inject(DOCUMENT);
+  redirectService = inject(RedirectService);
 
   // Signal para almacenar el id
   productId = signal<string | null>(null);
@@ -407,7 +409,7 @@ export default class ProductComponent implements OnInit {
     if (precioActual <= minimo) {
       if (preciosHistoricos.length < 3) {
         return 'amarillo'; // 🟡 Precio mínimo histórico pero igual a la mediana
-        
+
       }
       return 'verde'; // 🟢 Precio mínimo histórico
     } else if (precioActual <= mediana * 1.05) {
@@ -491,9 +493,9 @@ export default class ProductComponent implements OnInit {
     return text.substring(0, length) + '...';
   }
 
-//   redirectToProduct(url: string) {
-//   // window.open(`${url}?utm_source=droply.pe&utm_medium=referral`, '_blank');
-// }
+  //   redirectToProduct(url: string) {
+  //   // window.open(`${url}?utm_source=droply.pe&utm_medium=referral`, '_blank');
+  // }
 
   redirectToProduct(urlId: string) {
     console.log('Intentando navegar a:', '/seguimientos/' + urlId);
@@ -506,12 +508,16 @@ export default class ProductComponent implements OnInit {
       });
   }
 
-  limpiarProductosRecomendados(productsRec : any[], productsEqual: any[]) {
+  limpiarProductosRecomendados(productsRec: any[], productsEqual: any[]) {
     // console.log('Productos recomendados antes de limpiar:', productsRec);
     // console.log('Productos iguales:', productsEqual);
     const equalUrls = new Set(productsEqual.map(product => product.urlId));
-    
+
     return productsRec.filter(product => !equalUrls.has(product.urlId));
+  }
+
+  setRedirectUrl(url: string): void {
+    this.redirectService.goToLogin(url);
   }
 
 }

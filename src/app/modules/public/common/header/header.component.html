@@ -80,7 +80,7 @@
             </a>
           </li>
 
-          @if (authService.isAuthenticatedUser()) {
+          @if (authenticated()) {
           <!-- productos -->
           <li>
             <a [routerLink]="['/seguimientos']" routerLinkActive="text-primary" pRipple [pTooltip]="'Seguimientos'"
@@ -123,7 +123,7 @@
           </p-inputgroup>
         </div>
       </nav>
-      @if (authService.isAuthenticatedUser()) {
+      @if (authenticated()) {
       <div class="flex items-center ml-1">
         <!-- Botón solo con ícono para pantallas pequeñas -->
         <div class="block sm:hidden ">
@@ -172,23 +172,23 @@
         </p-popover>
       </div>
       }
-      <!-- @if (!authService.isAuthenticatedUser()) {
+      <!-- @if (!authenticated()) {
       <div class="flex-none">
         <p-button (onClick)="toggleTheme()" [icon]="(isDarkTheme$ | async) ? 'pi pi-sun' : 'pi pi-moon'" [text]="true"
           size="large" pTooltip="Tema" tooltipPosition="bottom">
         </p-button>
       </div>
       } -->
-      @if (!authService.isAuthenticatedUser()) {
+      @if (!authenticated()) {
       <div class="flex items-center ml-1">
         <div class="block sm:hidden">
-          <p-button type="button" severity="primary" icon="pi pi-user" size="large" [routerLink]="['/login']"
+          <p-button type="button" severity="primary" icon="pi pi-user" size="large" (onClick)="onLoginClick()"
             pTooltip="Ingresar" tooltipPosition="bottom"></p-button>
         </div>
 
         <!-- Botón con label para pantallas medianas en adelante -->
         <div class="hidden sm:block">
-          <p-button type="button" severity="primary" icon="pi pi-user" [routerLink]="['/login']" [label]="'Ingresar'"
+          <p-button type="button" severity="primary" icon="pi pi-user" (onClick)="onLoginClick()" [label]="'Ingresar'"
             pTooltip="Ingresar" tooltipPosition="bottom"></p-button>
         </div>
       </div>

@@ -24,6 +24,7 @@ import { DrawerModule } from 'primeng/drawer';
 import { CategoryService } from '../services/category.service';
 import { firstValueFrom } from 'rxjs';
 import { Meta, Title } from '@angular/platform-browser';
+import { RedirectService } from '../../../services/redirect.service';
 
 @Component({
   selector: 'app-offers',
@@ -59,6 +60,7 @@ export default class OffersComponent {
   private messageService = inject(MessageService);
   authService = inject(AuthService);
   private platformId = inject(PLATFORM_ID);
+  redirectService = inject(RedirectService);
 
   categoryService = inject(CategoryService);
   categorysUser = this.categoryService.categorysUser;
@@ -477,5 +479,9 @@ export default class OffersComponent {
         this.obteneOfertas();
       }
     });
+  }
+
+  setRedirectUrl(url: string): void {
+    this.redirectService.goToLogin(url);
   }
 }

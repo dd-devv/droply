@@ -18,6 +18,7 @@ import { SkeletonProdComponent } from '../../../ui/skeleton-prod/skeleton-prod.c
 import { CardModule } from 'primeng/card';
 import { ViewService } from '../../../services/view.service';
 import { BuyService } from '../../../services/buy.service';
+import { RedirectService } from '../../../services/redirect.service';
 
 
 @Component({
@@ -55,6 +56,7 @@ export default class OfferComponent implements OnInit {
   private meta = inject(Meta); // Inyectamos el servicio Meta
   private title = inject(Title); // Inyectamos el servicio Title
   private document = inject(DOCUMENT);
+  redirectService = inject(RedirectService);
 
   isLoading = this.productService.isLoading;
   isLoadingEqual = this.productService.isLoadingEqual;
@@ -301,7 +303,7 @@ export default class OfferComponent implements OnInit {
     if (precioActual <= minimo) {
       if (preciosHistoricos.length < 3) {
         return 'amarillo'; // 🟡 Precio mínimo histórico pero igual a la mediana
-        
+
       }
       return 'verde'; // 🟢 Precio mínimo histórico
     } else if (precioActual <= mediana * 1.05) {
@@ -464,11 +466,15 @@ export default class OfferComponent implements OnInit {
         console.error('Error en navegación:', err);
       });
   }
-  limpiarProductosRecomendados(productsRec : any[], productsEqual: any[]) {
+  limpiarProductosRecomendados(productsRec: any[], productsEqual: any[]) {
     // console.log('Productos recomendados antes de limpiar:', productsRec);
     // console.log('Productos iguales:', productsEqual);
     const equalUrls = new Set(productsEqual.map(product => product.urlId));
-    
+
     return productsRec.filter(product => !equalUrls.has(product.urlId));
+  }
+
+  setRedirectUrl(url: string): void {
+    this.redirectService.goToLogin(url);
   }
 }

@@ -214,6 +214,9 @@ export default class AuthService {
           return response;
         }),
         catchError(error => {
+
+          this.tokenStorage.setVerificationToken(error.error.tempToken);
+          this.needsVerification.set(true);
           return throwError(() => ({
             error: error.error
           }));

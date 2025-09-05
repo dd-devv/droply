@@ -15,6 +15,7 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { FormsModule } from '@angular/forms';
 import { Meta, Title } from '@angular/platform-browser';
+import { RedirectService } from '../../../services/redirect.service';
 
 @Component({
   selector: 'app-login',
@@ -44,6 +45,7 @@ export default class LoginComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private route = inject(ActivatedRoute); // Añadido para obtener query params
   private messageService = inject(MessageService);
+  private redirectService = inject(RedirectService);
 
   loginForm!: FormGroup;
   isLoading = false;
@@ -336,7 +338,7 @@ export default class LoginComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (res) => {
           this.isLoading = false;
-          this.router.navigate(['/']);
+          this.redirectService.redirectToSavedUrl();
         },
         error: (error) => {
           this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.error || error.error.message, life: 3000 });
@@ -412,6 +414,12 @@ export default class LoginComponent implements OnInit, OnDestroy {
       error: (error) => {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message, life: 3000 });
         this.codeSended.set(false);
+
+        if (error.error.tempToken) {
+          setTimeout(() => {
+            this.router.navigate(['/verify-whatsapp']);
+          }, 2000);
+        }
       }
     });
   }

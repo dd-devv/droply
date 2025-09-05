@@ -335,6 +335,18 @@
           />
         </div>
         }
+        @if (!authService.isAuthenticatedUser()) {
+          <div class="mt-4">
+          <p-button
+            label="Seguir"
+            icon="pi pi-heart-fill"
+            class="w-full text-xs sm:text-base"
+            styleClass="w-full"
+            outlined="true"
+            (onClick)="setRedirectUrl('/seguimientos/'+productService.priceHistory().productInfo.urlId)"
+          />
+        </div>
+        }
       </div>
     </div>
   </div>

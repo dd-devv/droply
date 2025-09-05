@@ -22,6 +22,7 @@ import { BadgeModule } from 'primeng/badge';
 import { FieldsetModule } from 'primeng/fieldset';
 import { Dialog } from 'primeng/dialog';
 import { Chip } from 'primeng/chip';
+import { RedirectService } from '../../../services/redirect.service';
 
 @Component({
   selector: 'app-search-results',
@@ -68,6 +69,7 @@ export default class SearchResultsComponent implements OnInit {
   sortOrder = signal<'asc' | 'desc'>('desc');
   estadosOfertas = signal<{ [key: string]: boolean }>({});
   isAuthenticated = true;
+  redirectService = inject(RedirectService);
 
   term = '';
 
@@ -286,5 +288,9 @@ export default class SearchResultsComponent implements OnInit {
 
   getMyJob(urlId: string): boolean {
     return this.estadosOfertas()[urlId] || false;
+  }
+
+  onLoginClick(): void {
+    this.redirectService.goToLogin();
   }
 }
