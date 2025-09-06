@@ -25,6 +25,7 @@ import { CategoryService } from '../services/category.service';
 import { firstValueFrom } from 'rxjs';
 import { Meta, Title } from '@angular/platform-browser';
 import { RedirectService } from '../../../services/redirect.service';
+import { CarouselModule } from 'primeng/carousel'; // Agrega esto
 
 @Component({
   selector: 'app-offers',
@@ -47,7 +48,8 @@ import { RedirectService } from '../../../services/redirect.service';
     InputTextModule,
     FloatLabelModule,
     SkeletonProdComponent,
-    DrawerModule
+    DrawerModule,
+    CarouselModule
   ],
   providers: [ExtractDomainPipe, MessageService],
   templateUrl: './offers.component.html',
@@ -70,6 +72,188 @@ export default class OffersComponent {
   selectedCategory: string | null = null;
   availableCategories: string[] = [];
   searchTerm: string = '';
+
+  supportedStores = [
+    {
+      name: 'Falabella',
+      logo: 'assets/svg/falabella.svg',
+      url: 'https://www.falabella.com.pe/falabella-pe',
+      domain: 'falabella'
+    },
+    {
+      name: 'Mercado Libre',
+      logo: 'assets/svg/mercadolibre.svg',
+      url: 'https://www.mercadolibre.com.pe/',
+      domain: 'mercadolibre'
+    },
+    {
+      name: 'Oechsle',
+      logo: 'assets/svg/oechsle.svg',
+      url: 'https://www.oechsle.pe/',
+      domain: 'oechsle'
+    },
+    {
+      name: 'Plaza Vea',
+      logo: 'assets/svg/plazavea.svg',
+      url: 'https://www.plazavea.com.pe/',
+      domain: 'plazavea'
+    },
+    {
+      name: 'Platanitos',
+      logo: 'assets/svg/platanitos.svg',
+      url: 'https://platanitos.com/pe',
+      domain: 'platanitos'
+    },
+    {
+      name: 'Promart',
+      logo: 'assets/svg/promart.svg',
+      url: 'https://www.promart.pe/',
+      domain: 'promart'
+    },
+    {
+      name: 'Sodimac',
+      logo: 'assets/svg/sodimac.svg',
+      url: 'http://sodimac.falabella.com.pe/sodimac-pe',
+      domain: 'sodimac'
+    },
+    {
+      name: 'Tottus',
+      logo: 'assets/svg/tottus.svg',
+      url: 'https://tottus.falabella.com.pe/tottus-pe',
+      domain: 'tottus'
+    },
+    {
+      name: 'Linio',
+      logo: 'assets/svg/linio.svg',
+      url: 'https://linio.falabella.com.pe/linio-pe',
+      domain: 'linio'
+    },
+    {
+      name: 'Inkafarma',
+      logo: 'assets/svg/inkafarma.svg',
+      url: 'https://inkafarma.pe/',
+      domain: 'inkafarma'
+    },
+    {
+      name: 'MiFarma',
+      logo: 'assets/svg/mifarma.svg',
+      url: 'https://www.mifarma.com.pe/',
+      domain: 'mifarma'
+    },
+    {
+      name: 'Vivanda',
+      logo: 'assets/svg/vivanda.svg',
+      url: 'https://www.vivanda.com.pe/',
+      domain: 'vivanda'
+    },
+    {
+      name: 'Shopstar',
+      logo: 'assets/svg/shopstar.svg',
+      url: 'https://www.shopstar.pe/',
+      domain: 'shopstar'
+    },
+    {
+      name: 'Metro',
+      logo: 'assets/svg/metro.svg',
+      url: 'https://www.metro.pe/',
+      domain: 'metro'
+    },
+    {
+      name: 'Carsa',
+      logo: 'assets/svg/carsa.svg',
+      url: 'https://www.carsa.pe/',
+      domain: 'carsa'
+    },
+    {
+      name: 'Aruma',
+      logo: 'assets/svg/aruma.svg',
+      url: 'https://www.aruma.pe/',
+      domain: 'aruma'
+    },
+    {
+      name: 'Romestore',
+      logo: 'assets/svg/romestore.svg',
+      url: 'https://www.romestore.pe/',
+      domain: 'romestore'
+    },
+    {
+      name: 'Coolbox',
+      logo: 'assets/svg/coolbox.svg',
+      url: 'https://www.coolbox.pe/',
+      domain: 'coolbox'
+    },
+    {
+      name: 'Tiendasishop',
+      logo: 'assets/svg/tiendasishop.svg',
+      url: 'https://pe.tiendasishop.com/',
+      domain: 'tiendasishop'
+    },
+    {
+      name: 'Real Plaza',
+      logo: 'assets/svg/realplaza.svg',
+      url: 'https://www.realplaza.com/',
+      domain: 'realplaza'
+    },
+    {
+      name: 'Wong',
+      logo: 'assets/svg/wong.svg',
+      url: 'https://www.wong.pe/',
+      domain: 'wong'
+    },
+    {
+      name: 'H&M',
+      logo: 'assets/svg/hm.svg',
+      url: 'https://pe.hm.com/',
+      domain: 'hm'
+    },
+    {
+      name: 'Cuidafarma',
+      logo: 'assets/svg/cuidafarma.svg',
+      url: 'https://cuidafarma.pe/',
+      domain: 'cuidafarma'
+    },
+    {
+      name: 'Hush Puppies',
+      logo: 'assets/svg/hushpuppies.svg',
+      url: 'https://www.hushpuppies.pe/',
+      domain: 'hushpuppies'
+    },
+    {
+      name: 'Miniso',
+      logo: 'assets/svg/miniso.svg',
+      url: 'https://www.miniso.pe/',
+      domain: 'miniso'
+    },
+    {
+      name: 'Tiendamia',
+      logo: 'assets/svg/tiendamia.svg',
+      url: 'https://tiendamia.com/pe/',
+      domain: 'tiendamia'
+    },
+    {
+      name: 'Estilos',
+      logo: 'assets/svg/estilos.svg',
+      url: 'https://www.estilos.com.pe/',
+      domain: 'estilos'
+    }
+  ];
+  responsiveOptions = [
+    {
+      breakpoint: '1199px',
+      numVisible: 6,
+      numScroll: 1
+    },
+    {
+      breakpoint: '991px',
+      numVisible: 4,
+      numScroll: 1
+    },
+    {
+      breakpoint: '767px',
+      numVisible: 3,
+      numScroll: 1
+    }
+  ];
 
   // Configuración interna de cuántas categorías considerar
   private categoriesToConsider: number = 1; // Solo primera categoría por defecto
@@ -424,6 +608,12 @@ export default class OffersComponent {
       if (newWindow) {
         newWindow.focus();
       }
+    }
+  }
+
+  openStore(url: string) {
+    if (typeof window !== 'undefined') {
+      window.open(url, '_blank');
     }
   }
 

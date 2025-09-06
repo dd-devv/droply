@@ -37,7 +37,7 @@ export class TimeAgoPipe implements PipeTransform {
       return diffDays === 1 ? 'Hace 1d' : `Hace ${diffDays}d`;
     } else if (diffDays < 30) {
       const weeks = Math.floor(diffDays / 7);
-      return weeks === 1 ? 'Hace una semana' : `Hace ${weeks} semanas`;
+      return weeks === 1 ? 'Hace una semana' : `Hace ${weeks} sem`;
     } else if (diffMonths < 12) {
       return diffMonths === 1 ? 'Hace un mes' : `Hace ${diffMonths} meses`;
     } else {
