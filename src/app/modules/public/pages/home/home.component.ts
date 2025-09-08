@@ -260,14 +260,14 @@ export default class HomeComponent implements OnInit {
 
   getImageSrc(): string {
     return this.themeService.getStoredThemePreference() 
-      ? 'https://res.cloudinary.com/dszjxyo0b/image/upload/f_avif/v1753116455/message-whatsapp-dark_fiqcpb.png'
-      : 'https://res.cloudinary.com/dszjxyo0b/image/upload/f_avif/v1753116455/message-whatsapp-light_pkvuxq.png';
+      ? 'https://res.cloudinary.com/drjilrozd/image/upload/v1757364998/oscuro_desk_ptyknq.jpg'
+      : 'https://res.cloudinary.com/drjilrozd/image/upload/v1757364998/claro_desk_w1t7kf.jpg';
   }
 
   getImagePhoneSrc(): string {
     return this.themeService.getStoredThemePreference() 
-      ? 'https://res.cloudinary.com/dszjxyo0b/image/upload/f_avif/v1751666424/whatsapp-darkmovil_nwlmj4.jpg'
-      : 'https://res.cloudinary.com/dszjxyo0b/image/upload/f_avif/v1751666426/whatsapp-light-movil_e75ng0.jpg';
+      ? 'https://res.cloudinary.com/drjilrozd/image/upload/v1757364998/oscuro_cel_aibv6p.jpg'
+      : 'https://res.cloudinary.com/drjilrozd/image/upload/v1757364998/claro_cel_rhf5is.jpg';
   }
 
   // Método para actualizar el gráfico con los datos del historial de precios
