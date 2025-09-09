@@ -2,9 +2,10 @@
 <div class="min-h-80 py-2 pt-32 md:pt-10">
 
   <div class="flex justify-center mb-5">
-    <img src="../../../../../assets/svg/logo-white.svg" alt="logo droply"
+    <img [src]="getImageSrc()" alt="logo droply"
       class="mx-auto md:mx-0  w-4/5 md:w-5/12 cursor-pointer" [routerLink]="(['/'])">
   </div>
+        <!-- <img [src]="getImageSrc()" alt="" class="rounded-lg w-full"> -->
   <h2 class="text-center text-xl  md:text-3xl mb-4 text-green-600" >¡Descubre las mejores ofertas aqui!</h2>
   <div class="mb-6 ">
     <p-carousel [value]="supportedStores" [numVisible]="10" [numScroll]="1" [circular]="true"

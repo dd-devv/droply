@@ -26,7 +26,7 @@ import { firstValueFrom } from 'rxjs';
 import { Meta, Title } from '@angular/platform-browser';
 import { RedirectService } from '../../../services/redirect.service';
 import { CarouselModule } from 'primeng/carousel'; // Agrega esto
-
+import { ThemeService } from '../../../../app/services/theme.service';
 @Component({
   selector: 'app-offers',
   standalone: true,
@@ -63,6 +63,7 @@ export default class OffersComponent {
   authService = inject(AuthService);
   private platformId = inject(PLATFORM_ID);
   redirectService = inject(RedirectService);
+  themeService = inject(ThemeService);
 
   categoryService = inject(CategoryService);
   categorysUser = this.categoryService.categorysUser;
@@ -673,5 +674,11 @@ export default class OffersComponent {
 
   setRedirectUrl(url: string): void {
     this.redirectService.goToLogin(url);
+  }
+
+  getImageSrc(): string {
+    return this.themeService.getStoredThemePreference() 
+      ? '../../../../../assets/svg/logo-white.svg' 
+      : '../../../../../assets/svg/logo-black.svg';
   }
 }
