@@ -393,6 +393,8 @@ export default class LoginComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.isLoading = true;
+
     // Obtener el valor del WhatsApp (considerando que puede estar deshabilitado)
     const whatsappValue = this.loginForm.get('whatsapp')?.value || this.loginForm.getRawValue().whatsapp;
 
@@ -408,6 +410,7 @@ export default class LoginComponent implements OnInit, OnDestroy {
       next: (res) => {
         this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Código enviado', life: 3000 });
         this.codeSended.set(true);
+        this.isLoading = false;
         this.loginForm.get('whatsapp')?.disable();
         this.startCountdown();
       },

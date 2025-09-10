@@ -120,9 +120,11 @@
               @if (codeSended()) {
                 <p class="my-4 text-center text-sm">
                   @if (canResendCode()) {
-                    <a (click)="requestLoginCode()" class="cursor-pointer text-blue-500 hover:text-blue-600">
-                      Reenviar código
-                    </a>
+                    @if (!isLoading) {
+                      <a (click)="requestLoginCode()" class="cursor-pointer text-blue-500 hover:text-blue-600">
+                        Reenviar código
+                      </a>
+                    }
                   } @else {
                     <span class="text-gray-500">
                       Reenviar código en: {{ countdown() }}s
