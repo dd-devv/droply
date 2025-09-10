@@ -414,7 +414,7 @@ export default class LoginComponent implements OnInit, OnDestroy {
       error: (error) => {
         this.messageService.add({ severity: 'error', summary: 'Error', detail: error.error.message, life: 3000 });
         this.codeSended.set(false);
-
+        this.isLoading = false;
         if (error.error.tempToken) {
           setTimeout(() => {
             this.router.navigate(['/verify-whatsapp']);
