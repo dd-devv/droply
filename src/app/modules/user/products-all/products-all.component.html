@@ -50,8 +50,8 @@
           </div>
         </ng-template>
         <ng-template #title>
-          <div class="text-sm  h-[60px] sm:text-xl  sm:h-16">
-            {{ truncateText(product.productTitle) | titlecase }}
+            <div class="text-sm h-[40px]  sm:text-xl sm:h-14  line-clamp-2 leading-relaxed">
+            {{ product.productTitle | titlecase }}
           </div>
           <div class="mt-2 flex align-middle">
             @if (isAuthenticated) {
