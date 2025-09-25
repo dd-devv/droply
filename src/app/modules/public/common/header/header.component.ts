@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, ViewChild, HostListener  } from '@angular/core';
 import { MenuItem } from 'primeng/api';
 import { Observable } from 'rxjs';
 import { ThemeService } from '../../../../services/theme.service';
@@ -43,13 +43,35 @@ export class HeaderComponent {
   isDarkTheme$: Observable<boolean>;
   redirectService = inject(RedirectService);
 
-  @ViewChild('op') op!: Popover;
+  // @ViewChild('op') op!: Popover;
+  @ViewChild('op') popover!: Popover;
+  private isPopoverOpen = false;
+
+  @HostListener('window:scroll', [])
+  hidePopoverOnScroll() {
+    if (this.popover && this.isPopoverOpen) {
+      this.popover.hide();
+    }
+  }
+
+  toggle(event: any) {
+    this.popover.toggle(event);
+  }
+
+  onPopoverShow() {
+    this.isPopoverOpen = true;
+  }
+
+  onPopoverHide() {
+    this.isPopoverOpen = false;
+  }
+  
 
   search = '';
 
-  toggle(event: any) {
-    this.op.toggle(event);
-  }
+  // toggle(event: any) {
+  //   this.op.toggle(event);
+  // }
 
   constructor(private themeService: ThemeService) {
     this.isDarkTheme$ = this.themeService.isDarkTheme$;
@@ -74,4 +96,19 @@ export class HeaderComponent {
   onLoginClick(): void {
     this.redirectService.goToLogin();
   }
+
+  isSideMenuOpen = false;
+
+  toggleSideMenu(): void {
+    this.isSideMenuOpen = !this.isSideMenuOpen;
+  }
+
+  // Cerrar el menú al navegar
+  // Puedes llamar a esta función en los eventos de clic de los enlaces del menú
+  closeSideMenu(): void {
+    this.isSideMenuOpen = false;
+  }
+
+
+  
 }
