@@ -54,7 +54,7 @@ export default class ProductsAllComponent implements OnInit {
   private productService = inject(ProductService);
   private extractDomainPipe = inject(ExtractDomainPipe);
   private messageService = inject(MessageService);
-  private authService = inject(AuthService);
+  authService = inject(AuthService);
   private platformId = inject(PLATFORM_ID);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
@@ -116,7 +116,7 @@ export default class ProductsAllComponent implements OnInit {
         this.searchTerm = params['search'] || '';
         this.loadProducts();
       });
-
+      // this.isAuthenticated = await firstValueFrom(this.authService.checkAuthStatus());
     this.checkAuthAndLoad();
   }
 
@@ -127,6 +127,7 @@ export default class ProductsAllComponent implements OnInit {
         this.loadUserCategories();
       }
     } catch (error) {
+      console.log('User is not authenticated');
       console.error('Error checking auth status:', error);
     }
   }
