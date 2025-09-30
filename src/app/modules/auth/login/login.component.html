@@ -1,4 +1,5 @@
 <!-- login.component.html -->
+<!-- login.component.html -->
 <div class="flex flex-col justify-center items-center h-screen md:h-96 w-full p-4 mt-5">
   <div class="w-full sm:w-4/5 md:w-2/3 lg:w-5/12">
     <p-card class="shadow-md my-8 px-8">
@@ -9,28 +10,6 @@
         Accede fácilmente con tu número de WhatsApp.
       </p>
       <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-        <!-- <p-floatlabel variant="on">
-        <input pInputText id="whatsapp" formControlName="whatsapp" autocomplete="off" fluid="true" />
-        <label for="whatsapp"><i class="pi pi-whatsapp me-1"></i> WhatsApp</label>
-      </p-floatlabel> -->
-
-      <!-- <input pInputText id="whatsapp" formControlName="whatsapp" autocomplete="off" fluid="true"
-      (keypress)="onlyNumbers($event)"
-      (input)="formatWhatsapp($event)"
-      maxlength="11" />
-      <label for="whatsapp"><i class="pi pi-whatsapp me-1"></i> WhatsApp</label> -->
-      <!-- <p-floatlabel variant="on">
-      <input pInputText id="whatsapp" formControlName="whatsapp" autocomplete="off" fluid="true"
-        type="tel"
-        inputmode="numeric"
-        pattern="[0-9]*"
-        (keypress)="onlyNumbers($event)"
-        (input)="formatWhatsapp($event)"
-        maxlength="11" />
-        <label for="whatsapp"><i class="pi pi-whatsapp me-1"></i> WhatsApp</label>
-      </p-floatlabel> -->
-
-
       <p-inputgroup>
         <p-inputgroup-addon>
           +51
@@ -52,23 +31,6 @@
             {{ getErrorMessage('whatsapp') }}
           </small>
         }
-
-
-        <!-- @if (codeSended()) {
-        <p-floatlabel variant="on" class="mt-6">
-          <div class="card flex justify-center">
-            <p-inputotp id="code" formControlName="code" [integerOnly]="true" [length]="6" size="small" />
-          </div>
-        </p-floatlabel>
-
-        <div class="flex justify-center">
-          @if (isFieldInvalid('code')) {
-            <small class="text-red-500">
-              {{ getErrorMessage('code') }}
-            </small>
-          }
-        </div>
-        } -->
         @if (codeSended()) {
           <div class="otp-container">
             <h3 class="mb-1">Verificación de código</h3>
@@ -77,10 +39,13 @@
             <div class="otp-inputs">
               @for (box of otpBoxes; track box; let i = $index) {
                 <input
+                  #otpInput
                   [(ngModel)]="otpValues[i]"
                   (input)="handleInput($event, i)"
                   (keydown)="handleKeyDown($event, i)"
                   (paste)="handlePaste($event)"
+                  (click)="handleClick($event, i)"
+                  (focus)="handleFocus($event, i)"
                   type="tel"
                   inputmode="numeric"
                   pattern="[0-9]*"
@@ -107,16 +72,6 @@
                 [disabled]="loginForm.value.whatsapp.length < 9 || isLoading" (onClick)="requestLoginCode()" />
               }
             </div>
-            <!-- <div class="flex justify-center mt-6">
-            @if (codeSended()) {
-              <p-button type="submit" label="Iniciar sesión" [loading]="isLoading"
-                [disabled]="!isOtpComplete() || loginForm.invalid || isLoading" />
-              } @else {
-                <p-button label="Enviar código" [loading]="isLoading" icon="pi pi-key"
-                  [disabled]="loginForm.value.whatsapp.length < 9 || isLoading" (onClick)="requestLoginCode()" />
-                }
-              </div> -->
-
               @if (codeSended()) {
                 <p class="my-4 text-center text-sm">
                   @if (canResendCode()) {
@@ -132,18 +87,6 @@
                   }
                 </p>
               }
-
-              <!-- <p class="mt-4 text-center underline cursor-pointer">
-                <a [routerLink]="['/register']">
-                  <i class="pi pi-user-plus me-1"></i> Crear cuenta
-                </a>
-              </p> -->
-
-              <!-- <p class="my-3 text-center text-sm cursor-pointer text-gray-400">
-              <a [routerLink]="['/forgot-password']">
-                Recuperar contraseña
-              </a>
-            </p> -->
           </form>
         </p-card>
       </div>

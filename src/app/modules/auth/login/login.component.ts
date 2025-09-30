@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal, OnDestroy } from '@angular/core';
+import { Component, OnInit, inject, signal, OnDestroy, ViewChildren, QueryList, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 
@@ -64,6 +64,9 @@ export default class LoginComponent implements OnInit, OnDestroy {
   lastBackspace = false;
   private meta = inject(Meta);
   private title = inject(Title);
+
+  // Referencia a los inputs del OTP
+  @ViewChildren('otpInput') otpInputs!: QueryList<ElementRef<HTMLInputElement>>;
 
   ngOnInit(): void {
     this.setMetaTags();
@@ -148,14 +151,8 @@ export default class LoginComponent implements OnInit, OnDestroy {
 
     // Si se ingresó un número y no es el último campo, mover al siguiente
     if (value && index < this.otpLength - 1) {
-      const nextInput = document.querySelectorAll('.otp-box')[index + 1] as HTMLInputElement;
+      const nextInput = this.otpInputs.toArray()[index + 1].nativeElement;
       nextInput.focus();
-    }
-
-    // Si el campo actual está vacío y no es el primero, mover al anterior
-    if (!value && index > 0) {
-      const prevInput = document.querySelectorAll('.otp-box')[index - 1] as HTMLInputElement;
-      prevInput.focus();
     }
   }
 
@@ -167,7 +164,7 @@ export default class LoginComponent implements OnInit, OnDestroy {
       // Si el campo está vacío, retroceder al anterior y borrar su valor
       if (!input.value && index > 0) {
         event.preventDefault();
-        const prevInput = document.querySelectorAll('.otp-box')[index - 1] as HTMLInputElement;
+        const prevInput = this.otpInputs.toArray()[index - 1].nativeElement;
         prevInput.value = '';
         this.otpValues[index - 1] = '';
         this.updateOtpFormValue();
@@ -192,26 +189,82 @@ export default class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
+  // NUEVO MÉTODO: Manejar clicks en los inputs
+  handleClick(event: MouseEvent, index: number): void {
+    // Encontrar el primer campo vacío
+    const firstEmptyIndex = this.findFirstEmptyIndex();
+    
+    // Si el campo clickeado no es el primer vacío, enfocar el primer vacío
+    if (firstEmptyIndex !== -1 && index !== firstEmptyIndex) {
+      event.preventDefault();
+      const targetInput = this.otpInputs.toArray()[firstEmptyIndex].nativeElement;
+      targetInput.focus();
+    }
+  }
+
+  // NUEVO MÉTODO: Manejar focus en los inputs
+  handleFocus(event: FocusEvent, index: number): void {
+    // Encontrar el primer campo vacío
+    const firstEmptyIndex = this.findFirstEmptyIndex();
+    
+    // Si el campo enfocado no es el primer vacío, redirigir el focus
+    if (firstEmptyIndex !== -1 && index !== firstEmptyIndex) {
+      event.preventDefault();
+      const targetInput = this.otpInputs.toArray()[firstEmptyIndex].nativeElement;
+      setTimeout(() => targetInput.focus(), 0);
+    }
+  }
+
+  // NUEVO MÉTODO: Encontrar el primer campo vacío
+  private findFirstEmptyIndex(): number {
+    for (let i = 0; i < this.otpLength; i++) {
+      if (!this.otpValues[i] || this.otpValues[i] === '') {
+        return i;
+      }
+    }
+    // Si todos están llenos, devolver el último
+    return this.otpLength - 1;
+  }
+
   handlePaste(event: ClipboardEvent): void {
     event.preventDefault();
     const pasteData = event.clipboardData?.getData('text/plain').replace(/\D/g, '');
 
     if (pasteData && pasteData.length === this.otpLength) {
+      // Limpiar todos los valores primero
+      this.otpValues = Array(this.otpLength).fill('');
+      
+      // Llenar los valores del portapapeles
       for (let i = 0; i < this.otpLength; i++) {
         this.otpValues[i] = pasteData[i];
-        const input = document.querySelectorAll('.otp-box')[i] as HTMLInputElement;
+        const input = this.otpInputs.toArray()[i].nativeElement;
         input.value = pasteData[i];
       }
 
       this.updateOtpFormValue();
 
-      // Enfocar el último campo
-      const lastInput = document.querySelectorAll('.otp-box')[this.otpLength - 1] as HTMLInputElement;
+      // Enfocar el último campo (ya que todos están llenos)
+      const lastInput = this.otpInputs.toArray()[this.otpLength - 1].nativeElement;
       lastInput.focus();
+    } else if (pasteData && pasteData.length > 0) {
+      // Si el portapapeles tiene datos pero no la longitud exacta, llenar hasta donde alcance
+      const lengthToFill = Math.min(pasteData.length, this.otpLength);
+      
+      for (let i = 0; i < lengthToFill; i++) {
+        this.otpValues[i] = pasteData[i];
+        const input = this.otpInputs.toArray()[i].nativeElement;
+        input.value = pasteData[i];
+      }
+
+      this.updateOtpFormValue();
+
+      // Enfocar el siguiente campo vacío o el último llenado
+      const nextEmptyIndex = this.findFirstEmptyIndex();
+      const targetIndex = nextEmptyIndex < this.otpLength ? nextEmptyIndex : this.otpLength - 1;
+      const targetInput = this.otpInputs.toArray()[targetIndex].nativeElement;
+      targetInput.focus();
     }
   }
-
-
 
   updateOtpFormValue(): void {
     this.loginForm.get('code')?.setValue(this.otpValues.join(''));
