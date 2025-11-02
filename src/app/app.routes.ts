@@ -11,7 +11,12 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
-        path: '',
+        path: '', // Ruta vacía dentro de children
+        redirectTo: 'ofertas',
+        pathMatch: 'full'
+      },
+      {
+        path: 'home',
         loadComponent: () => import('./modules/public/pages/home/home.component'),
       },
       {
@@ -114,7 +119,7 @@ export const routes: Routes = [
     canActivate: [adminGuard],
     children: [
       {
-        path: '',
+        path: 'home',
         loadComponent: () => import('./modules/admin/pages/home-admin/home-admin.component'),
       },
       {

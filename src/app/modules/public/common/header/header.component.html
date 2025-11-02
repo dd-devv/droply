@@ -78,7 +78,7 @@
 
       <!-- Logo -->
       <div class="flex align-middle">
-        <img src="../../../../../assets/svg/logo.svg" [routerLink]="['/']" width="32" alt="logo"
+        <img src="../../../../../assets/svg/logo.svg" [routerLink]="['/home']" width="32" alt="logo"
           class="cursor-pointer mr-2 lg:mx-2" />
       </div>
 
@@ -87,7 +87,7 @@
         <ul class="flex justify-evenly md:justify-start space-x-2 items-center w-full lg:w-auto">
           <!-- inicio -->
           <li>
-            <a [routerLink]="['/']" routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }" pRipple
+            <a [routerLink]="['/home']" routerLinkActive="text-primary" [routerLinkActiveOptions]="{ exact: true }" pRipple
               [pTooltip]="'Inicio'" tooltipEvent="focus" tooltipPosition="top" life="500"
               class="flex flex-col md:flex-row items-center justify-center px-1 rounded-md">
               <i class="pi pi-home text-xl md:text-base mb-1 md:mb-0 md:mr-1 sm:block"></i>
