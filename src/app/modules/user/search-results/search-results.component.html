@@ -233,33 +233,35 @@
   </div>
 </p-dialog> -->
 <!-- Diálogo de búsqueda genérica mejorado -->
-  <p-dialog maskStyleClass="backdrop-blur-sm" [modal]="true" [(visible)]="isGeneric"
-    [style]="{ width: '90%', maxWidth: '500px' }" [breakpoints]="{'960px': '75vw', '640px': '90vw'}" >
+<p-dialog maskStyleClass="backdrop-blur-sm" [modal]="true" [(visible)]="isGeneric"
+  [style]="{ width: '90%', maxWidth: '500px' }" [breakpoints]="{'960px': '75vw', '640px': '90vw'}">
 
-    <ng-template #header>
-      <div class="inline-flex items-center justify-center gap-2">
-        <i class="pi pi-info-circle text-blue-500"></i>
-        <h2 class="font-bold text-xl">Búsqueda muy general</h2>
-      </div>
-    </ng-template>
-
-    <div class="text-center mb-2">
-      <i class="pi pi-exclamation-triangle text-4xl text-yellow-500 mb-3"></i>
-      <p class="p-text-secondary mb-6">Para obtener resultados más precisos, prueba con alguno de estos términos:</p>
+  <ng-template #header>
+    <div class="inline-flex items-center justify-center gap-2">
+      <i class="pi pi-info-circle text-blue-500"></i>
+      <h2 class="font-bold text-xl">Búsqueda muy general</h2>
     </div>
+  </ng-template>
 
-    <div class="flex flex-wrap gap-2 justify-center">
-      @for (sug of suggestions(); track $index) {
-      <p-button [label]="sug | titlecase" (click)="selectSuggestion(sug)"
-        class="cursor-pointer" styleClass="p-button-outlined p-button-secondary" />
-      }
-    </div>
+  <div class="text-center mb-2">
+    <i class="pi pi-exclamation-triangle text-4xl text-yellow-500 mb-3"></i>
+    <p class="p-text-secondary mb-6">Para obtener resultados más precisos, prueba con alguno de estos términos:</p>
+  </div>
 
-    <!-- <ng-template #footer>
+  <div class="flex flex-wrap gap-2 justify-center">
+    @for (sug of suggestions(); track $index) {
+    <p-button [label]="sug | titlecase" (click)="selectSuggestion(sug, true)" class="cursor-pointer"
+      styleClass="p-button-outlined p-button-secondary" />
+    }
+    <p-button [label]="'Continuar con la búsqueda de: ' + term" (click)="selectSuggestion(term, true)"
+      class="cursor-pointer" styleClass="p-button-outlined p-button-primary" />
+  </div>
+
+  <!-- <ng-template #footer>
       <div class="flex justify-end gap-2">
         <button pButton pRipple label="Entendido" (click)="isGeneric = false" class="p-button-text"></button>
       </div>
     </ng-template> -->
-  </p-dialog>
+</p-dialog>
 
 <p-toast [breakpoints]="{ '780px': { width: '80%', right: '8' } }" />

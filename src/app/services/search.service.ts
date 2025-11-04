@@ -25,8 +25,8 @@ export class SearchService {
   private authToken = computed(() => this.tokenStorage.getToken());
 
   // ✅ Funciones privadas que hacen las requests
-  private async fetchSearchTerm(term: string): Promise<SearchResponse> {
-    const searchData: SearchReq = { term };
+  private async fetchSearchTerm(term: string, specific: boolean): Promise<SearchResponse> {
+    const searchData: SearchReq = { term, specific };
 
     return await lastValueFrom(
       this.http.post<SearchResponse>(`${this.apiUrl}search`, searchData, {
@@ -39,8 +39,8 @@ export class SearchService {
     );
   }
 
-  private async fetchSearchTracks(term: string): Promise<ProductPublic[]> {
-    const searchData: SearchReq = { term };
+  private async fetchSearchTracks(term: string, specific: boolean = false): Promise<ProductPublic[]> {
+    const searchData: SearchReq = { term, specific };
 
     return await lastValueFrom(
       this.http.post<ProductPublic[]>(`${this.apiUrl}search/tracks`, searchData, {
@@ -54,12 +54,17 @@ export class SearchService {
   }
 
   // ✅ Método compatible que usa TanStack Query y retorna Observable
-  searTerm(term: string): Observable<SearchResponse> {
+  searTerm(term: string, specific: boolean, forceNotGeneric: boolean = false): Observable<SearchResponse> {
     this.isLoading.set(true);
+
+    // Si forceNotGeneric es true, invalidar caché para hacer nueva búsqueda
+    if (forceNotGeneric) {
+      this.queryClient.removeQueries({ queryKey: ['search-term', term] });
+    }
 
     // Si ya está en caché, devuélvelo directo
     const cached = this.queryClient.getQueryData<SearchResponse>(['search-term', term]);
-    if (cached) {
+    if (cached && !forceNotGeneric) {
       this.results.set(cached.results);
       this.suggestions.set(cached.suggestions);
       this.isGeneric.set(cached.isGeneric);
@@ -71,12 +76,12 @@ export class SearchService {
     return new Observable<SearchResponse>(subscriber => {
       this.queryClient.ensureQueryData({
         queryKey: ['search-term', term],
-        queryFn: () => this.fetchSearchTerm(term),
+        queryFn: () => this.fetchSearchTerm(term, specific),
         staleTime: 1000 * 60 * 5
       }).then(data => {
         this.results.set(data.results);
         this.suggestions.set(data.suggestions);
-        this.isGeneric.set(data.isGeneric);
+        this.isGeneric.set(forceNotGeneric ? false : data.isGeneric);
         this.isLoading.set(false);
         subscriber.next(data);
         subscriber.complete();
@@ -121,10 +126,10 @@ export class SearchService {
     });
   }
 
-  prefetchSearchTerm(term: string) {
+  prefetchSearchTerm(term: string, specific: boolean) {
     return this.queryClient.prefetchQuery({
       queryKey: ['search-term', term],
-      queryFn: () => this.fetchSearchTerm(term),
+      queryFn: () => this.fetchSearchTerm(term, specific),
       staleTime: 1000 * 60 * 5
     });
   }

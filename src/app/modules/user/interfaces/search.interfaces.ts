@@ -1,5 +1,6 @@
 export interface SearchReq {
   term: string;
+  specific: boolean;
 }
 
 export interface SearchResult {

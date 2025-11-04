@@ -119,10 +119,10 @@ export default class SearchResultsComponent implements OnInit {
     }
   }
 
-  searchTerm() {
+  searchTerm(specific: boolean = false, forceNotGeneric: boolean = false) {
     this.loading.set(true);
     const queryParams: any = {};
-    this.searchService.searTerm(this.term).subscribe({
+    this.searchService.searTerm(this.term, specific, forceNotGeneric).subscribe({
       next: () => {
         if (this.isGeneric()) {
           this.productsFound.set([]);
@@ -280,10 +280,11 @@ export default class SearchResultsComponent implements OnInit {
     });
   }
 
-  selectSuggestion(suggestion: string): void {
+  selectSuggestion(suggestion: string, specific: boolean): void {
     this.term = suggestion;
-    this.searchTerm();
+    // Forzar que no sea genérico cuando se selecciona desde el modal
     this.isGeneric.set(false);
+    this.searchTerm(specific, true);
   }
 
   getMyJob(urlId: string): boolean {
