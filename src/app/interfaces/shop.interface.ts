@@ -12,12 +12,12 @@ export const Shops: Shop[] = [
     logo: 'assets/svg/falabella.svg',
     url: 'https://www.falabella.com.pe/falabella-pe',
   },
-  {
-    id: 2,
-    name: 'Mercado Libre',
-    logo: 'assets/svg/mercadolibre.svg',
-    url: 'https://www.mercadolibre.com.pe/',
-  },
+  // {
+  //   id: 2,
+  //   name: 'Mercado Libre',
+  //   logo: 'assets/svg/mercadolibre.svg',
+  //   url: 'https://www.mercadolibre.com.pe/',
+  // },
   {
     id: 3,
     name: 'Oechsle',
@@ -72,18 +72,18 @@ export const Shops: Shop[] = [
     logo: 'assets/svg/vivanda.svg',
     url: 'https://www.vivanda.com.pe/',
   },
-  {
-    id: 12,
-    name: 'Mifarma',
-    logo: 'assets/svg/mifarma.svg',
-    url: 'https://www.mifarma.com.pe/',
-  },
-  {
-    id: 13,
-    name: 'Inkafarma',
-    logo: 'assets/svg/inkafarma.svg',
-    url: 'https://inkafarma.pe/',
-  },
+  // {
+  //   id: 12,
+  //   name: 'Mifarma',
+  //   logo: 'assets/svg/mifarma.svg',
+  //   url: 'https://www.mifarma.com.pe/',
+  // },
+  // {
+  //   id: 13,
+  //   name: 'Inkafarma',
+  //   logo: 'assets/svg/inkafarma.svg',
+  //   url: 'https://inkafarma.pe/',
+  // },
   {
     id: 14,
     name: 'Metro',
@@ -102,12 +102,12 @@ export const Shops: Shop[] = [
     logo: 'assets/svg/aruma.svg',
     url: 'https://www.aruma.pe/',
   },
-  {
-    id: 17,
-    name: 'Romestore',
-    logo: 'assets/svg/romestore.svg',
-    url: 'https://www.romestore.pe/',
-  },
+  // {
+  //   id: 17,
+  //   name: 'Romestore',
+  //   logo: 'assets/svg/romestore.svg',
+  //   url: 'https://www.romestore.pe/',
+  // },
   {
     id: 18,
     name: 'Coolbox',
@@ -132,24 +132,24 @@ export const Shops: Shop[] = [
     logo: 'assets/svg/wong.svg',
     url: 'https://www.wong.pe/',
   },
-  {
-    id: 22,
-    name: 'H&M',
-    logo: 'assets/svg/hm.svg',
-    url: 'https://pe.hm.com/',
-  },
-  {
-    id: 23,
-    name: 'Cuidafarma',
-    logo: 'assets/svg/cuidafarma.svg',
-    url: 'https://cuidafarma.pe/',
-  },
-  {
-    id: 24,
-    name: 'Hushpuppies',
-    logo: 'assets/svg/hushpuppies.svg',
-    url: 'https://www.hushpuppies.pe/',
-  },
+  // {
+  //   id: 22,
+  //   name: 'H&M',
+  //   logo: 'assets/svg/hm.svg',
+  //   url: 'https://pe.hm.com/',
+  // },
+  // {
+  //   id: 23,
+  //   name: 'Cuidafarma',
+  //   logo: 'assets/svg/cuidafarma.svg',
+  //   url: 'https://cuidafarma.pe/',
+  // },
+  // {
+  //   id: 24,
+  //   name: 'Hushpuppies',
+  //   logo: 'assets/svg/hushpuppies.svg',
+  //   url: 'https://www.hushpuppies.pe/',
+  // },
   {
     id: 25,
     name: 'Miniso',

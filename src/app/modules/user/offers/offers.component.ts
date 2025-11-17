@@ -81,12 +81,12 @@ export default class OffersComponent {
       url: 'https://www.falabella.com.pe/falabella-pe',
       domain: 'falabella'
     },
-    {
-      name: 'Mercado Libre',
-      logo: 'assets/svg/mercadolibre.svg',
-      url: 'https://www.mercadolibre.com.pe/',
-      domain: 'mercadolibre'
-    },
+    // {
+    //   name: 'Mercado Libre',
+    //   logo: 'assets/svg/mercadolibre.svg',
+    //   url: 'https://www.mercadolibre.com.pe/',
+    //   domain: 'mercadolibre'
+    // },
     {
       name: 'Oechsle',
       logo: 'assets/svg/oechsle.svg',
@@ -129,18 +129,18 @@ export default class OffersComponent {
       url: 'https://linio.falabella.com.pe/linio-pe',
       domain: 'linio'
     },
-    {
-      name: 'Inkafarma',
-      logo: 'assets/svg/inkafarma.svg',
-      url: 'https://inkafarma.pe/',
-      domain: 'inkafarma'
-    },
-    {
-      name: 'MiFarma',
-      logo: 'assets/svg/mifarma.svg',
-      url: 'https://www.mifarma.com.pe/',
-      domain: 'mifarma'
-    },
+    // {
+    //   name: 'Inkafarma',
+    //   logo: 'assets/svg/inkafarma.svg',
+    //   url: 'https://inkafarma.pe/',
+    //   domain: 'inkafarma'
+    // },
+    // {
+    //   name: 'MiFarma',
+    //   logo: 'assets/svg/mifarma.svg',
+    //   url: 'https://www.mifarma.com.pe/',
+    //   domain: 'mifarma'
+    // },
     {
       name: 'Vivanda',
       logo: 'assets/svg/vivanda.svg',
@@ -171,12 +171,12 @@ export default class OffersComponent {
       url: 'https://www.aruma.pe/',
       domain: 'aruma'
     },
-    {
-      name: 'Romestore',
-      logo: 'assets/svg/romestore.svg',
-      url: 'https://www.romestore.pe/',
-      domain: 'romestore'
-    },
+    // {
+    //   name: 'Romestore',
+    //   logo: 'assets/svg/romestore.svg',
+    //   url: 'https://www.romestore.pe/',
+    //   domain: 'romestore'
+    // },
     {
       name: 'Coolbox',
       logo: 'assets/svg/coolbox.svg',
@@ -201,24 +201,24 @@ export default class OffersComponent {
       url: 'https://www.wong.pe/',
       domain: 'wong'
     },
-    {
-      name: 'H&M',
-      logo: 'assets/svg/hm.svg',
-      url: 'https://pe.hm.com/',
-      domain: 'hm'
-    },
-    {
-      name: 'Cuidafarma',
-      logo: 'assets/svg/cuidafarma.svg',
-      url: 'https://cuidafarma.pe/',
-      domain: 'cuidafarma'
-    },
-    {
-      name: 'Hush Puppies',
-      logo: 'assets/svg/hushpuppies.svg',
-      url: 'https://www.hushpuppies.pe/',
-      domain: 'hushpuppies'
-    },
+    // {
+    //   name: 'H&M',
+    //   logo: 'assets/svg/hm.svg',
+    //   url: 'https://pe.hm.com/',
+    //   domain: 'hm'
+    // },
+    // {
+    //   name: 'Cuidafarma',
+    //   logo: 'assets/svg/cuidafarma.svg',
+    //   url: 'https://cuidafarma.pe/',
+    //   domain: 'cuidafarma'
+    // },
+    // {
+    //   name: 'Hush Puppies',
+    //   logo: 'assets/svg/hushpuppies.svg',
+    //   url: 'https://www.hushpuppies.pe/',
+    //   domain: 'hushpuppies'
+    // },
     {
       name: 'Miniso',
       logo: 'assets/svg/miniso.svg',
