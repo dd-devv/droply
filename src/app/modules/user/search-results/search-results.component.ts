@@ -48,6 +48,7 @@ import { RedirectService } from '../../../services/redirect.service';
   ],
   providers: [MessageService],
   templateUrl: './search-results.component.html',
+  styleUrl: './search-results.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class SearchResultsComponent implements OnInit {
@@ -89,7 +90,6 @@ export default class SearchResultsComponent implements OnInit {
       const searchQuery = params['q'];
       if (searchQuery) {
         this.term = this.normalizeSearchTerm(searchQuery);
-
         this.searchTerm();
       }
     });
@@ -127,7 +127,6 @@ export default class SearchResultsComponent implements OnInit {
         if (this.isGeneric()) {
           this.productsFound.set([]);
         }
-
         this.loading.set(false);
       },
       error: (err) => {
@@ -137,7 +136,6 @@ export default class SearchResultsComponent implements OnInit {
 
     this.searchService.searTracks(this.term).subscribe({
       next: (res) => {
-
         if (this.isAuthenticated) {
           this.loadProductStates(res);
         }
@@ -201,6 +199,14 @@ export default class SearchResultsComponent implements OnInit {
           life: 3000
         });
         this.removeLoadingUrl(url);
+        // Recargar estados después de registrar
+        this.searchService.searTracks(this.term).subscribe({
+          next: (products) => {
+            if (this.isAuthenticated) {
+              this.loadProductStates(products);
+            }
+          }
+        });
       },
       error: (err) => {
         this.messageService.add({
@@ -233,9 +239,15 @@ export default class SearchResultsComponent implements OnInit {
     });
   }
 
-
   addUrlForMe(sourceJobId: string, urlId: string): void {
     this.isLoading.set(true);
+    
+    // Actualizar inmediatamente el estado local para feedback visual instantáneo
+    this.estadosOfertas.update(estados => ({
+      ...estados,
+      [urlId]: true
+    }));
+
     this.productService.addUrlForMe(sourceJobId, urlId).subscribe({
       next: () => {
         this.messageService.add({
@@ -244,9 +256,27 @@ export default class SearchResultsComponent implements OnInit {
           detail: 'Agregado a tu seguimiento',
           life: 3000
         });
-        this.searchService.searTracks(this.term).subscribe();
+        
+        // Recargar el estado desde el servidor para confirmar
+        this.searchService.searTracks(this.term).subscribe({
+          next: (products) => {
+            if (this.isAuthenticated) {
+              this.loadProductStates(products);
+            }
+            this.isLoading.set(false);
+          },
+          error: () => {
+            this.isLoading.set(false);
+          }
+        });
       },
       error: (error) => {
+        // Revertir el estado local si hay error
+        this.estadosOfertas.update(estados => ({
+          ...estados,
+          [urlId]: false
+        }));
+        
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
@@ -259,6 +289,12 @@ export default class SearchResultsComponent implements OnInit {
   }
 
   deleteUrl(urlId: string): void {
+    // Actualizar inmediatamente el estado local para feedback visual instantáneo
+    this.estadosOfertas.update(estados => ({
+      ...estados,
+      [urlId]: false
+    }));
+
     this.productService.deleteUrl(urlId).subscribe({
       next: () => {
         this.messageService.add({
@@ -267,9 +303,23 @@ export default class SearchResultsComponent implements OnInit {
           detail: 'Dejaste de seguir este producto',
           life: 3000
         });
-        this.searchService.searTracks(this.term).subscribe();
+        
+        // Recargar el estado desde el servidor para confirmar
+        this.searchService.searTracks(this.term).subscribe({
+          next: (products) => {
+            if (this.isAuthenticated) {
+              this.loadProductStates(products);
+            }
+          }
+        });
       },
       error: (error) => {
+        // Revertir el estado local si hay error
+        this.estadosOfertas.update(estados => ({
+          ...estados,
+          [urlId]: true
+        }));
+        
         this.messageService.add({
           severity: 'error',
           summary: 'Error',
